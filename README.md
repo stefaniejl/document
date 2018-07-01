@@ -122,7 +122,9 @@ int binarySearch(int a[],int n,int key)
           else
           {  h = med - 1; th}
      }
-     return -1;
+
+
+return -1;
 }
 
 3、判断数组中是否有重复元素
@@ -174,3 +176,60 @@ pubilic class WordCountTest{
            
        }
 }
+     
+5、Java——检索一段话中出现次数最多的英文单词
+
+     String str = "Look to the skies above London and you'll see the usual suspects rainclouds, plane and pigeons. But by the end of the year, you might just see something else.";
+     str = str.replace('\'',' ').replace(',',' ').replace('.',' ');
+     
+     String[] strings = str.split("\\s+"); // “\\s+”代表一个或多个空格，是正则表达式
+     
+     //用哈希表存储每个单词及其个数
+     Map<String,Integer> map = new HashMap<String,Integer>();
+     
+     for(int i=0; i<strings.length; i++)
+     {
+         if(!map.contains(strings[i]))
+	 {
+	      map.add(strings[i],1);
+	 }
+	 else
+	 {
+	      map.add(strings[i],(map.get(strings[i])+1));
+	 }
+     }
+     
+     //构造一个包含“键值对”的List
+     List<Map.Entry<String,Integer>> list = new ArryList<Map.Entry<String,Integer>>(map.entrySet());
+     /*
+      * 对List进行排序
+      * 自己实现一个Comparator的匿名内部类，并实现compare方法
+      * 使其根据出现的次数降序排列（因为我们需要的是出现最多的单词）
+      */
+       Collections.sort(list,new Comparator<Map.Entry<String,Integer>>(){
+            public int compare(Entry<String,Integer> obj1, Entry<String,Integer> obj2){
+	           //降序排列
+		   return obj2.getValue() - obj1.getValue(); 
+	    }
+       });
+      
+      //输出出现次数最多的前20个单词
+      
+      for(int i=0; i<20; i++)
+      {
+          System.out.println(list.get(i).getKey());
+      }
+   
+6、找出两个链表的交点，要求：时间复杂度为 O(N)，空间复杂度为 O(1)
+当访问 A 链表的指针访问到链表尾部时，令它从链表 B 的头部开始访问链表 B；同样地，当访问 B 链表的指针访问到链表尾部时，令它从链表 A 的头部开始访问链表 A。这样就能控制访问 A 和 B 两个链表的指针能同时访问到交点。
+public ListNode getIntersectionNode(ListNode headA,ListNode headB){
+    ListNode l1 = headA, l2 = headB;
+    while(l1 ！= l2){
+        l1 = (l1 == null) ? headB ：l1.next;
+	l2 = (l2 == null) ? headA : l2.next;
+    }
+    return l1;
+}
+如果只是判断是否存在交点，那么就是另一个问题，即 编程之美：3.6 的问题。有两种解法：把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；或者直接比较两个链表的最后一个节点是否相同。
+
+     
