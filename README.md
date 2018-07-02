@@ -191,11 +191,11 @@ pubilic class WordCountTest{
      {
          if(!map.contains(strings[i]))
 	 {
-	      map.add(strings[i],1);
+	      map.put(strings[i],1);
 	 }
 	 else
 	 {
-	      map.add(strings[i],(map.get(strings[i])+1));
+	      map.put(strings[i],(map.get(strings[i])+1));
 	 }
      }
      
@@ -222,14 +222,95 @@ pubilic class WordCountTest{
    
 6、找出两个链表的交点，要求：时间复杂度为 O(N)，空间复杂度为 O(1)
 当访问 A 链表的指针访问到链表尾部时，令它从链表 B 的头部开始访问链表 B；同样地，当访问 B 链表的指针访问到链表尾部时，令它从链表 A 的头部开始访问链表 A。这样就能控制访问 A 和 B 两个链表的指针能同时访问到交点。
-public ListNode getIntersectionNode(ListNode headA,ListNode headB){
-    ListNode l1 = headA, l2 = headB;
-    while(l1 ！= l2){
-        l1 = (l1 == null) ? headB ：l1.next;
-	l2 = (l2 == null) ? headA : l2.next;
-    }
-    return l1;
+
+
+public ListNode getIntersectionNode(ListNode headA,ListNode headB)
+{
+      ListNode l1 =  headA, l2 = headB;
+      
+      while(l1!=l2)
+      {
+          l1 = (l1 == null) ? headB : l1.next;
+	  l2 = (l2 == null) ? headA : l2.next;
+      }
+      return l1;
 }
+
 如果只是判断是否存在交点，那么就是另一个问题，即 编程之美：3.6 的问题。有两种解法：把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；或者直接比较两个链表的最后一个节点是否相同。
 
+
+void bubbleSort(int a[], int n)
+{
+     for(int i=0;i<n-1;i++)
+     {
+        for(int j=0;j<n-1-i;j++)
+	{
+	    if(a[j]>a[j+1])
+	    {   swap(a,j,j+1);  }
+	}
+     }
+}
+
+
+void selectionSort(int a[], int n)
+{
+   int i, j, min;
+   for(i=0;i<n-1;i++)
+   {
+        min = i;
+	for(j=i+1;j<n;j++)
+	{
+	   if(a[j]<a[min])
+	   {   min = j;   }
+	}
+	if(min != i)
+	{   swap(a,min,i);  }
+   }
+}
+
+void insertSort()
+{
+    int i, j, temp;
+    
+    for(i=1;i<n;i++)
+    {
+        temp = a[i];
+	j = i-1;
+	while(j>=0 && a[j]>temp)
+	{
+	    a[j+1] = a[j];
+	    j--;
+	}
+	a[j+1] = temp;
+    }
+    
+}
+
+
+int partition(int a[], int left, int right)
+{
+    int temp = a[right];
+    int tail = left-1;
+    
+    for(int i=left ; i<right ; i++)
+    {
+        if(a[i]<temp)
+	{
+	    swap(a,++tail,i);
+	}
+    }
+    swap(a,tail+1,right);
+    return tail+1;
+}
+
+void quickSort(int a[], int left, int right)
+{
+     if(left>right)
+     {
+          return;
+     }
+     int pivot = partition(a,left,right);
      
+     quickSort(a,left,pivot-1);
+     quicSort(a,pivot+1,right);
+}
