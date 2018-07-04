@@ -238,79 +238,31 @@ public ListNode getIntersectionNode(ListNode headA,ListNode headB)
 
 如果只是判断是否存在交点，那么就是另一个问题，即 编程之美：3.6 的问题。有两种解法：把第一个链表的结尾连接到第二个链表的开头，看第二个链表是否存在环；或者直接比较两个链表的最后一个节点是否相同。
 
-
-void bubbleSort(int a[], int n)
+7、二分查找
+void int binarySearch(int[] a, int num)
 {
-     for(int i=0;i<n-1;i++)
-     {
-        for(int j=0;j<n-1-i;j++)
-	{
-	    if(a[j]>a[j+1])
-	    {   swap(a,j,j+1);  }
-	}
-     }
+      int left, right, mid;
+      
+      left = 0;
+      right = a.length - 1;
+      
+      while(left<=right)
+      {
+          mid = left + (right - left)/2;
+	  if(a[mid] == num)
+	  {
+	       return mid;
+	  }
+	  else if(a[mid] > num)
+	  {
+	       right = mid - 1;
+	  }
+	  else
+	  {
+	       left = mid + 1;
+	  }
+      }
+      return -1;
 }
 
 
-void selectionSort(int a[], int n)
-{
-   int i, j, min;
-   for(i=0;i<n-1;i++)
-   {
-        min = i;
-	for(j=i+1;j<n;j++)
-	{
-	   if(a[j]<a[min])
-	   {   min = j;   }
-	}
-	if(min != i)
-	{   swap(a,min,i);  }
-   }
-}
-
-void insertSort()
-{
-    int i, j, temp;
-    
-    for(i=1;i<n;i++)
-    {
-        temp = a[i];
-	j = i-1;
-	while(j>=0 && a[j]>temp)
-	{
-	    a[j+1] = a[j];
-	    j--;
-	}
-	a[j+1] = temp;
-    }
-    
-}
-
-
-int partition(int a[], int left, int right)
-{
-    int temp = a[right];
-    int tail = left-1;
-    
-    for(int i=left ; i<right ; i++)
-    {
-        if(a[i]<temp)
-	{
-	    swap(a,++tail,i);
-	}
-    }
-    swap(a,tail+1,right);
-    return tail+1;
-}
-
-void quickSort(int a[], int left, int right)
-{
-     if(left>right)
-     {
-          return;
-     }
-     int pivot = partition(a,left,right);
-     
-     quickSort(a,left,pivot-1);
-     quicSort(a,pivot+1,right);
-}
