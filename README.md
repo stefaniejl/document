@@ -304,4 +304,29 @@ punblic class Solution{
     }
 }
 
+9、反转链表
+（1）递归
+public ListNode ReverseList(ListNode head)
+{
+    if(head == null || head.next == null)
+    {   return head;   }
+    ListNode next = head.next;
+    head.next = null;
+    ListNode newHead = ReverseList(next);
+    next.next = head;
+    return newHead;
+}
 
+(2)迭代
+public ListNode ReverseList(ListNode head)
+{
+   ListNode newList = new ListNode(-1);
+   while(head != null)
+   {
+        ListNode next = head.next;
+	head.next = newList.next;
+	newList.next = head;
+	head = next;
+   }
+   return newList.next;
+}
